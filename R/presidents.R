@@ -1,0 +1,28 @@
+presidents <- data.frame(
+  name = c('Geert Egberts Boer', 
+           'Albertus John Rooks',
+           'John J. Hiemenga',
+           'Johannes Broene',
+           'Rienk B. Kuiper',
+           'Ralph Stob',
+           'Henry Schultze',
+           'William Spoelhof',
+           'Anthony J. Diekema',
+           'Gaylen J. Byker',
+           'Michael K. Le Roy',
+           'Wiebe K. Bore'
+           ),
+  begin_year = c(1876, 1900, 1919, 1925, 1930, 1933, 1940, 1951, 1976, 1995, 2012, 2022),
+  born_in_michigan = c(FALSE,
+                  TRUE,
+                  FALSE,
+                  TRUE,
+                  FALSE,
+                  FALSE,
+                  FALSE,
+                  FALSE,
+                  TRUE,
+                  FALSE,
+                  FALSE,
+                  FALSE)
+)

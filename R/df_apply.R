@@ -9,13 +9,15 @@
 #' @export
 #'
 #' @examples
-#' x <- data.frame(c(1:7))
-#' y <- function(.int) {return(.int * 2)}
-#' z <- function(c) {is.numeric(c)}
-#' df_apply(x, y, z)
+#' funct <- function(.int) {return(.int * 2)}
+#' filt <- function(c) {is.numeric(c)}
+#' df_apply(presidents, funct, filt)
+#' 
+#' 
 df_apply <- function(.data, .fun, .filter, ...) {
   indices <- sapply(.data, .filter)
   modified_cols <- lapply(.data[indices], .fun, ...)
   new_data <- cbind(.data[!indices], modified_cols)
   return(new_data)
 }
+

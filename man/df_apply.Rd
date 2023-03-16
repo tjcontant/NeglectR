@@ -22,8 +22,9 @@ An altered dataframe.
 Apply alteration to dataframe
 }
 \examples{
-x <- data.frame(c(1:7))
-y <- function(.int) {return(.int * 2)}
-z <- function(c) {is.numeric(c)}
-df_apply(x, y, z)
+funct <- function(.int) {return(.int * 2)}
+filt <- function(c) {is.numeric(c)}
+df_apply(presidents, funct, filt)
+
+
 }
