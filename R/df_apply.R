@@ -15,6 +15,7 @@
 #' 
 #' 
 df_apply <- function(.data, .fun, .filter, ...) {
+  stopifnot(is.data.frame(.data))
   indices <- sapply(.data, .filter)
   modified_cols <- lapply(.data[indices], .fun, ...)
   new_data <- cbind(.data[!indices], modified_cols)

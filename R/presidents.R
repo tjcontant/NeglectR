@@ -1,3 +1,5 @@
+#' An example data frame about Calvin University's presidents
+
 presidents <- data.frame(
   name = c('Geert Egberts Boer', 
            'Albertus John Rooks',
@@ -26,3 +28,5 @@ presidents <- data.frame(
                   FALSE,
                   FALSE)
 )
+
+usethis::use_data(presidents, overwrite = TRUE)
