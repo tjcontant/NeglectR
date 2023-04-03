@@ -3,14 +3,24 @@
 \docType{data}
 \name{presidents}
 \alias{presidents}
-\title{An example data frame about Calvin University's presidents}
+\title{Calvin University's Presidents}
 \format{
-An object of class \code{data.frame} with 12 rows and 3 columns.
+A data frame with 12 observations on 3 variables.
+name              name of president
+begin_year        year in which the president took office
+born_in_michigan  whether or not they were born in Michigan
 }
 \usage{
 presidents
 }
 \description{
-An example data frame about Calvin University's presidents
+This data frame is a collection of information on Calvin University's presidents.
+}
+\examples{
+if(require(ggplot2)) {
+  presidents |>
+    ggplot(aes(y = begin_year, color = born_in_michigan)) +
+    geom_boxplot()
+}
 }
 \keyword{datasets}

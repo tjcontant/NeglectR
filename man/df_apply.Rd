@@ -11,9 +11,9 @@ df_apply(.data, .fun, .filter, ...)
 
 \item{.fun}{A function that can be applied to a column of a data frame and return a column of a data frame.}
 
-\item{.filter}{A function that can be applied to a columns of a data frame and returns.}
+\item{.filter}{A function that can be applied to a columns of a data frame and returns TRUE or FALSE.}
 
-\item{...}{Any other additional parameters passed to the function.}
+\item{...}{Optional arguments to .fun.}
 }
 \value{
 An altered dataframe.
@@ -22,9 +22,7 @@ An altered dataframe.
 Apply alteration to dataframe
 }
 \examples{
-funct <- function(.int) {return(.int * 2)}
-filt <- function(c) {is.numeric(c)}
-df_apply(presidents, funct, filt)
-
+funct <- function(.int, .sigfigs) {return(signif((.int * 2), .sigfigs))}
+df_apply(presidents, funct, is.numeric, .sigfigs = 2)
 
 }
