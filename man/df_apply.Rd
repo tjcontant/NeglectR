@@ -2,12 +2,12 @@
 % Please edit documentation in R/df_apply.R
 \name{df_apply}
 \alias{df_apply}
-\title{Apply alteration to dataframe}
+\title{Apply alteration to data frame}
 \usage{
 df_apply(.data, .fun, .filter, ...)
 }
 \arguments{
-\item{.data}{A dataframe to alter.}
+\item{.data}{A data frame to alter.}
 
 \item{.fun}{A function that can be applied to a column of a data frame and return a column of a data frame.}
 
@@ -16,10 +16,10 @@ df_apply(.data, .fun, .filter, ...)
 \item{...}{Optional arguments to .fun.}
 }
 \value{
-An altered dataframe.
+A modified data frame with columns in the original order.
 }
 \description{
-Apply alteration to dataframe
+Apply alteration to data frame
 }
 \examples{
 funct <- function(.int, .sigfigs) {return(signif((.int * 2), .sigfigs))}

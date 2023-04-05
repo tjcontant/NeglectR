@@ -1,11 +1,11 @@
-#' Apply alteration to dataframe
+#' Apply alteration to data frame
 #'
-#' @param .data A dataframe to alter.
+#' @param .data A data frame to alter.
 #' @param .fun A function that can be applied to a column of a data frame and return a column of a data frame.
 #' @param .filter A function that can be applied to a columns of a data frame and returns TRUE or FALSE.
 #' @param ... Optional arguments to .fun.
 #'
-#' @return An altered dataframe.
+#' @return A modified data frame with columns in the original order.
 #' @export
 #'
 #' @examples
@@ -14,9 +14,9 @@
 #' 
 df_apply <- function(.data, .fun, .filter, ...) {
   stopifnot(is.data.frame(.data))
-  indices <- sapply(.data, .filter)
-  modified_cols <- lapply(.data[indices], .fun, ...)
-  new_data <- cbind(.data[!indices], modified_cols)
-  return(new_data)
+  res <- lapply(.data, function(x) {
+    if (.filter(x)) .fun(x, ...)
+    else x
+  })
+  return(data.frame(res))
 }
-
