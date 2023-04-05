@@ -1,6 +1,7 @@
 pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
-articles: {}
-last_built: 2023-03-29T20:16Z
+articles:
+  df_apply-vignette: df_apply-vignette.html
+last_built: 2023-04-05T20:35Z
 

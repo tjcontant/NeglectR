@@ -1,0 +1,42 @@
+---
+title: "df_apply-vignette"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{df_apply-vignette}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Installation
+
+```{r setup, message = FALSE}
+library(NeglectR)
+```
+
+## Description
+
+The function `df_apply` is designed to apply a function to specific columns of a data frame based on a filtering function. Columns for which the filter function returns true will be modified by the function. During this process, the order of the columns is preserved.
+
+## Usage
+
+In the following example, we will exhibit some functionalities of `df_apply` using the `presidents` data frame.
+
+Here is the data we will use.
+
+```{r view-data}
+presidents
+```
+
+We want to modify all logical columns so that FALSE and TRUE are replaced with the numbers zero and one, respectively. This change can be achieved by using the `as.numeric` function. In the following chunk of code, we implement this change using `df_apply`.
+
+```{r}
+df_apply(.data = presidents, .fun =  as.numeric, .filt = is.logical)
+```
+
