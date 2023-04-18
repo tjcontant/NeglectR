@@ -1,0 +1,167 @@
+---
+title: "plotly-maps"
+author: "Tristan Contant"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{plotly-maps}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Introduction
+
+When thinking of all the inventions in human history, maps arguably one of the most important. From ancient cave drawings to smartphone apps, for millenia maps have enabled us to understand the relationships between objects in a given space.
+
+In this vignette, we will highlight some ways to create geometries from data that contains spacial dimensions. More specifically, we will outline the basics of interactive map creation using **plotly**, a package for creating interactive plots that has comparability with R.
+
+Before creating maps, we need to load the plotly package into our working environment.
+
+```{r load-plotly, message = FALSE}
+library(plotly)
+```
+
+## Chloropleth Maps
+
+A chloropleth map is created by creating associations between a variable and geographic regions. This often looks like assigning various asthetics, like color, to location-based glyphs.
+
+Let's learn how to create one of these chloropleth maps using plotly. To begin, you will need some sort of geometry information, a file that delineates the various geogrpahic regions and their positions relative to one another. While you could install any geometries you like in the form of a GeoJSON file, we will stick with the geometries that are built into Plotly: a world map and a US map.
+
+### World Map
+
+The process of making a map can be broken down into three steps. First we'll load in some data regarding countries' gross domestic product (GDP). We performed a log transformation on GDP so that there are no extreme outliers, making for better coloring. 
+
+```{r}
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2014_world_gdp_with_codes.csv")
+
+df <- df |> mutate(log_gdp = log(GDP..BILLIONS.))
+```
+
+Next, we'll create an object to story the maps geometrical asthetics.
+
+```{r}
+# geo styling
+g <- list(
+  scope = 'world',
+  projection = list(type = 'albers world'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+```
+
+Finally, we'll create the map using `plot_geo()` and `add_trace()`. Other functions are used to stylize the map. 
+
+```{r, fig.width = 7, fig.align = 'center'}
+# set location to only USA using locationmode
+world_chloro <- plot_geo(df, locationmode = 'world') |>
+  add_trace(z = ~log_gdp, 
+            locations = ~CODE, 
+            color = ~log_gdp) |>
+  # add title to legend
+  colorbar(title = "log(Millions USD)") |>
+  layout(
+    # add title to map
+    title = '2011 US Fruit Exports by State',
+    # link geomtry asthetics
+    geo = g
+  )
+
+world_chloro
+```
+
+One of the beneficial features of this map is that it allows one to zoom in and out. Therefore, the user can clearly see countries that may not be visible at a larger scale.
+
+### United States Map
+
+In this plot, we will highlight a few more basic features in Plotly.
+
+We'll begin, once again, by uploading the needed data. This data frame contains information on the amounts of various foods
+
+```{r, fig.width = 7, fig.align = 'center'}
+df <- read.csv("https://raw.githubusercontent.com/plotly/datasets/master/2011_us_ag_exports.csv")
+```
+
+Now, we can start building a map. Let's say we wanted to analyze differences in fruit production across the United States.
+
+```{r, fig.width = 7, fig.align = 'center'}
+# geo styling
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showlakes = TRUE,
+  lakecolor = toRGB('white')
+)
+
+# set location to only USA using locationmode
+usa_chloro <- plot_geo(df, locationmode = 'USA-states') |>
+  add_trace(z = ~total.exports, 
+            locations = ~code, 
+            color = ~total.exports, 
+            colors = 'Greens') |>
+  # add title to legend
+  colorbar(title = "Millions USD") |>
+  layout(
+    # add title to map
+    title = '2011 US Fruit Exports by State',
+    # link geomtry asthetics
+    geo = g
+  )
+
+usa_chloro
+```
+
+We can see that the areas of greatest fruit production include the West and Midwest. However, this graph may lead to false associations between states and fruit production. We cannot see if all of California produces a lot of fruit, or if only a few areas do. Furthermore, given how big California, their higher fruit production may just be a result of them being bigger states. More work would need to be done to create these graphs.
+
+In general, it is easy to create a map using Plotly, but it is difficult, regardless of what software you are using, to create a *good* map.
+
+## Scatter Plots on Maps
+
+Another common task is to plot points on a given geometry. For example, we may want to plot the points of all Starbucks locations in the United States. In Plotly, that is really easy!
+
+First, let's load in our Starbucks data.
+
+```{r}
+# load in data
+df <- read.csv("https://raw.githubusercontent.com/libjohn/mapping-with-R/master/data/All_Starbucks_Locations_in_the_US_-_Map.csv")
+
+# replace NA with 'None' for `Features - Stations` column
+df$drive_through = df$`Features...Stations` |> tidyr::replace_na('None')
+```
+
+Time to make the map!
+
+```{r, fig.width = 7, fig.align = 'center', warning = FALSE}
+# geo styling
+g <- list(
+  scope = 'usa',
+  projection = list(type = 'albers usa'),
+  showland = TRUE,
+  landcolor = toRGB("gray95"),
+  subunitcolor = toRGB("gray85"),
+  countrycolor = toRGB("gray85"),
+  countrywidth = 0.5,
+  subunitwidth = 0.5
+)
+
+starbucks_fig <- plot_geo(df, lat = ~Latitude, lon = ~Longitude) |> 
+  add_markers(
+    color = ~drive_through, 
+    symbol = I("circle"), 
+    size = I(8), 
+    alpha = I(0.2),
+    hoverinfo = "text"
+  ) |>
+  colorbar(title = "Incoming flights<br />February 2011") |>
+  layout(
+    title = 'US Starbucks Locations', 
+    geo = g
+  )
+
+starbucks_fig
+```
