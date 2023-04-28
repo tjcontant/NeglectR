@@ -42,6 +42,7 @@
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
     <a class="dropdown-item" href="articles/df_apply-vignette.html">df_apply-vignette</a>
+    <a class="dropdown-item" href="articles/plotly-maps.html">plotly-maps</a>
   </div>
 </li>
       </ul>
@@ -59,7 +60,25 @@
   <main id="main" class="col-md-9"><div class="section level1">
 <div class="page-header"><h1 id="neglectr">NeglectR<a class="anchor" aria-label="anchor" href="#neglectr"></a>
 </h1></div>
-<p>We created the NeglectR package as a way to practice group work in git.</p>
+<!-- badges: start -->
+<!-- badges: end -->
+<p>The goal of NeglectR is to …</p>
+<div class="section level2">
+<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+</h2>
+<p>You can install the development version of NeglectR like so:</p>
+<div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu"><a href="https://remotes.r-lib.org/reference/install_github.html" class="external-link">install_github</a></span><span class="op">(</span><span class="st">"adhamrishmawi1/NegletR"</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
+</h2>
+<p>For example, say we want to modify all logical columns so that FALSE and TRUE are replaced with the numbers zero and one, respectively. This change can be achieved by using the <code>as.numeric</code> function. In the following chunk of code, we implement this change using <code>df_apply</code>.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">NeglectR</span><span class="op">)</span></span>
+<span><span class="fu"><a href="reference/df_apply.html">df_apply</a></span><span class="op">(</span>.data <span class="op">=</span> <span class="va">presidents</span>, .fun <span class="op">=</span>  <span class="va">as.numeric</span>, .filt <span class="op">=</span> <span class="va">is.logical</span><span class="op">)</span></span></code></pre></div>
+</div>
 </div>
   </main><aside class="col-md-3"><div class="license">
 <h2 data-toc-skip>License</h2>
